@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="hi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yaduvanshi Mart</title>
+    <style>
+      :root { color-scheme: light; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: #eef2f6;
+        color: #1a211c;
+        font: 16px/1.45 "Noto Sans Devanagari", "Noto Sans", sans-serif;
+      }
+      main {
+        max-width: 420px;
+        margin: 1.2rem auto;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 28px rgba(23, 62, 168, 0.12);
+      }
+      header {
+        background: #173ea8;
+        color: #fff;
+        padding: 1.1rem 1.15rem 0.9rem;
+      }
+      header p { margin: 0.2rem 0 0; opacity: 0.85; font-size: 0.85rem; }
+      header h1 { margin: 0; font-size: 1.25rem; }
+      .body { padding: 1rem 1.15rem 1.2rem; }
+      .who { font-size: 1.15rem; font-weight: 800; margin: 0 0 0.2rem; }
+      .date { color: #667; margin: 0 0 1rem; font-size: 0.88rem; }
+      .line {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.75rem 0;
+        border-top: 1px solid #e6e8ee;
+        border-bottom: 1px solid #e6e8ee;
+        font-weight: 700;
+      }
+      .due { margin: 1rem 0 0; font-size: 1.2rem; font-weight: 800; color: #173ea8; }
+      button {
+        margin-top: 1.1rem;
+        width: 100%;
+        min-height: 2.8rem;
+        border: 0;
+        border-radius: 8px;
+        background: #173ea8;
+        color: #fff;
+        font: inherit;
+        font-weight: 800;
+      }
+      .bad { padding: 2rem 1rem; text-align: center; }
+      @media print {
+        body { background: #fff; }
+        main { margin: 0; box-shadow: none; }
+        button { display: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <main id="slip"><p class="bad">बिल खुल रहा है…</p></main>
+    <script>
+      var root = document.getElementById("slip");
+      function money(paise) {
+        var rupees = Number(paise || 0) / 100;
+        return "₹" + rupees.toLocaleString("en-IN", { maximumFractionDigits: rupees % 1 ? 2 : 0 });
+      }
+      function text(tag, value, className) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        node.textContent = value;
+        return node;
+      }
+      try {
+        var token = location.hash.replace(/^#/, "").replace(/-/g, "+").replace(/_/g, "/");
+        while (token.length % 4) token += "=";
+        var binary = atob(token);
+        var bytes = new Uint8Array(binary.length);
+        for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        var bill = JSON.parse(new TextDecoder().decode(bytes));
+        var hi = bill.l !== "en";
+        root.replaceChildren();
+        var head = document.createElement("header");
+        head.append(text("h1", bill.s || "Yaduvanshi Mart"));
+        head.append(text("p", hi ? "खाता पर्ची" : "Khata slip"));
+        var body = document.createElement("div");
+        body.className = "body";
+        body.append(text("p", bill.n || "", "who"));
+        body.append(text("p", bill.d || "", "date"));
+        var line = document.createElement("div");
+        line.className = "line";
+        var gave = bill.k === "u";
+        line.append(text("span", (gave ? (hi ? "दिए" : "Gave") : (hi ? "लिए" : "Received")) + (bill.t ? " · " + bill.t : "")));
+        line.append(text("span", money(bill.a)));
+        body.append(line);
+        var due = Number(bill.g) > 0
+          ? (hi ? "बाकी " : "Due ") + money(bill.g)
+          : Number(bill.v) > 0
+            ? (hi ? "आपको देना " : "To pay ") + money(bill.v)
+            : (hi ? "चुकता" : "Settled");
+        body.append(text("p", due, "due"));
+        var save = document.createElement("button");
+        save.type = "button";
+        save.textContent = hi ? "PDF सहेजें" : "Save PDF";
+        save.onclick = function () { window.print(); };
+        body.append(save);
+        root.append(head, body);
+        document.title = (bill.s || "Khata") + " · " + (bill.n || "");
+      } catch (error) {
+        root.replaceChildren(text("p", "यह बिल लिंक अधूरा है।", "bad"));
+      }
+    </script>
+  </body>
+</html>
