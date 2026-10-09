@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="hi">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,14 +30,27 @@
       header h1 { margin: 0; font-size: 1.25rem; }
       .body { padding: 1rem 1.15rem 1.2rem; }
       .who { font-size: 1.15rem; font-weight: 800; margin: 0 0 0.2rem; }
-      .date { color: #667; margin: 0 0 1rem; font-size: 0.88rem; }
+      .date { color: #667; margin: 0 0 0.8rem; font-size: 0.88rem; }
+      .items { margin: 0 0 0.4rem; }
+      .items h2 {
+        margin: 0;
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: #667;
+        font-weight: 700;
+      }
+      .items li {
+        padding: 0.45rem 0;
+        border-bottom: 1px dashed #e6e8ee;
+        font-weight: 700;
+      }
       .line {
         display: flex;
         justify-content: space-between;
         gap: 1rem;
         padding: 0.75rem 0;
         border-top: 1px solid #e6e8ee;
-        border-bottom: 1px solid #e6e8ee;
         font-weight: 700;
       }
       .due { margin: 1rem 0 0; font-size: 1.2rem; font-weight: 800; color: #173ea8; }
@@ -61,7 +74,7 @@
     </style>
   </head>
   <body>
-    <main id="slip"><p class="bad">बिल खुल रहा है…</p></main>
+    <main id="slip"><p class="bad">Opening bill…</p></main>
     <script>
       var root = document.getElementById("slip");
       function money(paise) {
@@ -74,6 +87,12 @@
         node.textContent = value;
         return node;
       }
+      function itemsOf(value) {
+        return String(value || "")
+          .split(/\n|,|;/)
+          .map(function (part) { return part.trim(); })
+          .filter(Boolean);
+      }
       try {
         var token = location.hash.replace(/^#/, "").replace(/-/g, "+").replace(/_/g, "/");
         while (token.length % 4) token += "=";
@@ -82,6 +101,7 @@
         for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
         var bill = JSON.parse(new TextDecoder().decode(bytes));
         var hi = bill.l !== "en";
+        var items = itemsOf(bill.t);
         root.replaceChildren();
         var head = document.createElement("header");
         head.append(text("h1", bill.s || "Yaduvanshi Mart"));
@@ -90,10 +110,21 @@
         body.className = "body";
         body.append(text("p", bill.n || "", "who"));
         body.append(text("p", bill.d || "", "date"));
+        if (items.length) {
+          var list = document.createElement("div");
+          list.className = "items";
+          list.append(text("h2", hi ? "सामान" : "Items"));
+          var ul = document.createElement("ul");
+          items.forEach(function (item) {
+            ul.append(text("li", item));
+          });
+          list.append(ul);
+          body.append(list);
+        }
         var line = document.createElement("div");
         line.className = "line";
         var gave = bill.k === "u";
-        line.append(text("span", (gave ? (hi ? "दिए" : "Gave") : (hi ? "लिए" : "Received")) + (bill.t ? " · " + bill.t : "")));
+        line.append(text("span", gave ? (hi ? "दिए" : "Gave") : (hi ? "लिए" : "Received")));
         line.append(text("span", money(bill.a)));
         body.append(line);
         var due = Number(bill.g) > 0
@@ -110,7 +141,7 @@
         root.append(head, body);
         document.title = (bill.s || "Khata") + " · " + (bill.n || "");
       } catch (error) {
-        root.replaceChildren(text("p", "यह बिल लिंक अधूरा है।", "bad"));
+        root.replaceChildren(text("p", "This bill link is incomplete.", "bad"));
       }
     </script>
   </body>
