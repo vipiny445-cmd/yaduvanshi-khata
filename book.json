@@ -1,0 +1,161 @@
+{
+  "updatedAt": 1760000000000,
+  "shop": {
+    "name": "Yaduvanshi Mart",
+    "owner": "",
+    "place": "Sanota, Uttar Pradesh"
+  },
+  "lang": "en",
+  "customers": [
+    {
+      "id": "photo-arman",
+      "name": "Arman",
+      "phone": "",
+      "place": "",
+      "sample": false,
+      "role": "customer",
+      "hidden": false,
+      "reminder": "",
+      "createdAt": "2026-10-08T18:05:00.000Z",
+      "entries": [
+        {
+          "id": "photo-arman-1",
+          "date": "2026-10-08",
+          "time": "18:05",
+          "note": "",
+          "kind": "udhaar",
+          "paise": 4500,
+          "struck": false
+        },
+        {
+          "id": "photo-arman-2",
+          "date": "2026-10-08",
+          "time": "22:26",
+          "note": "",
+          "kind": "udhaar",
+          "paise": 7000,
+          "struck": false
+        },
+        {
+          "id": "photo-arman-3",
+          "date": "2026-10-09",
+          "time": "16:56",
+          "note": "",
+          "kind": "udhaar",
+          "paise": 3000,
+          "struck": false
+        }
+      ]
+    },
+    {
+      "id": "photo-sk",
+      "name": "Sk",
+      "phone": "",
+      "place": "",
+      "sample": false,
+      "role": "customer",
+      "hidden": false,
+      "reminder": "",
+      "createdAt": "2026-10-09T12:00:00.000Z",
+      "entries": [
+        {
+          "id": "photo-sk-1",
+          "date": "2026-10-09",
+          "time": "12:00",
+          "note": "",
+          "kind": "udhaar",
+          "paise": 103100,
+          "struck": false
+        }
+      ]
+    },
+    {
+      "id": "photo-raju-balvan",
+      "name": "Raju Balvan",
+      "phone": "",
+      "place": "",
+      "sample": false,
+      "role": "customer",
+      "hidden": false,
+      "reminder": "",
+      "createdAt": "2026-10-09T12:00:00.000Z",
+      "entries": [
+        {
+          "id": "photo-raju-balvan-1",
+          "date": "2026-10-09",
+          "time": "12:00",
+          "note": "",
+          "kind": "udhaar",
+          "paise": 126900,
+          "struck": false
+        }
+      ]
+    },
+    {
+      "id": "photo-vipin",
+      "name": "vipin Kumar",
+      "phone": "",
+      "place": "",
+      "sample": false,
+      "role": "customer",
+      "hidden": false,
+      "reminder": "",
+      "createdAt": "2026-10-09T12:00:00.000Z",
+      "entries": [
+        {
+          "id": "photo-vipin-1",
+          "date": "2026-10-09",
+          "time": "12:00",
+          "note": "",
+          "kind": "udhaar",
+          "paise": 67500,
+          "struck": false
+        }
+      ]
+    },
+    {
+      "id": "photo-adarsh",
+      "name": "Adarsh",
+      "phone": "",
+      "place": "",
+      "sample": false,
+      "role": "customer",
+      "hidden": false,
+      "reminder": "",
+      "createdAt": "2026-10-09T12:00:00.000Z",
+      "entries": [
+        {
+          "id": "photo-adarsh-1",
+          "date": "2026-10-09",
+          "time": "12:00",
+          "note": "",
+          "kind": "udhaar",
+          "paise": 64900,
+          "struck": false
+        }
+      ]
+    },
+    {
+      "id": "photo-raju-charni",
+      "name": "Raju Charni",
+      "phone": "",
+      "place": "",
+      "sample": false,
+      "role": "customer",
+      "hidden": false,
+      "reminder": "",
+      "createdAt": "2026-10-09T12:00:00.000Z",
+      "entries": [
+        {
+          "id": "photo-raju-charni-1",
+          "date": "2026-10-09",
+          "time": "12:00",
+          "note": "",
+          "kind": "udhaar",
+          "paise": 16600,
+          "struck": false
+        }
+      ]
+    }
+  ]
+}
